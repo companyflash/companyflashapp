@@ -4,6 +4,7 @@ import { redirect }          from "next/navigation";
 import Sidebar               from "@/app/components/Sidebar";
 import Header                from "@/app/components/Header";
 import { authOptions }       from "@/app/lib/auth"; // your NextAuth options
+import OnboardingGuard from "@/app/components/OnboardingGuard";
 
 export default async function ProtectedLayout({
   children,
@@ -22,6 +23,11 @@ export default async function ProtectedLayout({
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6">
++         <OnboardingGuard>
++           {children}
++         </OnboardingGuard>
+        </main>
       </div>
     </div>
   );
