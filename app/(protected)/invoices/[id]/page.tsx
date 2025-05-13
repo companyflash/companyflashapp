@@ -1,16 +1,16 @@
-// app/(protected)/invoices/[id]/page.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from "next/navigation";
 import InvoiceTabs from "./InvoiceTabs";
 import { getInvoiceByUUID, type Invoice } from "@/app/lib/db";
 
 /**
- * We leave the props untyped (`any`) so Next’s internal generator
- * can assign whichever `PageProps` flavour it prefers.  Runtime
- * guards keep us safe.
+ *  We intentionally use `any` so the internal PageProps diff check
+ *  accepts whatever shape Next.js generates (it may include
+ *  Promise<any>). Runtime guards keep things safe.
  */
 export default async function Page(props: any) {
   const id = props?.params?.id as string | undefined;
-  if (!id) return notFound();            // missing dynamic segment → 404
+  if (!id) return notFound();
 
   let invoice: Invoice | null = null;
   try {
