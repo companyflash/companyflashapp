@@ -1,4 +1,4 @@
-// app/onboarding/page.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useSession, signIn } from "next-auth/react";
@@ -15,7 +15,7 @@ export default function OnboardingPage() {
   // 1. Wait for session to load
   if (status === "loading") return <p>Loading…</p>;
 
-  // 2. If not signed in, send them to Google
+  // 2. If not signed in, redirect to Google
   if (status === "unauthenticated") {
     signIn("google");
     return null;
@@ -24,7 +24,6 @@ export default function OnboardingPage() {
   // 3. Extract the organisation_id we stored on session.user
   const orgId = (session?.user as any)?.organisation_id as string | undefined;
   if (!orgId) {
-    // should never happen, but just in case
     return <p>Error: no organisation ID found.</p>;
   }
 
@@ -46,7 +45,7 @@ export default function OnboardingPage() {
       return alert("Failed to save. Check console.");
     }
 
-    // Redirect back into the protected area
+    // Redirect back into the public landing or dashboard
     router.push("/");
   }
 
