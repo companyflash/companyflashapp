@@ -1,21 +1,22 @@
+// app/(protected)/invoices/[id]/page.tsx
 import { notFound } from "next/navigation";
 import InvoiceTabs from "./InvoiceTabs";
 import { getInvoiceByUUID, type Invoice } from "@/app/lib/db";
 
-export default async function Page({
-  params,
-}: {
-  /** OPTIONAL to satisfy Next’s internal PageProps */
-  params?: { id: string };
-}) {
-  // Guard for the “should never happen” case
-  if (!params?.id) return notFound();
+/**
+ * We leave the props untyped (`any`) so Next’s internal generator
+ * can assign whichever `PageProps` flavour it prefers.  Runtime
+ * guards keep us safe.
+ */
+export default async function Page(props: any) {
+  const id = props?.params?.id as string | undefined;
+  if (!id) return notFound();            // missing dynamic segment → 404
 
-  let invoice: Invoice | null;
+  let invoice: Invoice | null = null;
   try {
-    invoice = await getInvoiceByUUID(params.id);
+    invoice = await getInvoiceByUUID(id);
   } catch {
-    invoice = null;
+    /* swallow DB error */
   }
 
   if (!invoice) return notFound();
