@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
 
 const supabase = createClient(
-  process.env.SUPA_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPA_SERVICE_ROLE_KEY!
 );
 

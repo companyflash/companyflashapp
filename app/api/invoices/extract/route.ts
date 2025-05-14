@@ -25,7 +25,7 @@ const processorId = process.env.GOOGLE_CLOUD_PROCESSOR_ID!;
 const endpoint    = `https://${location}-documentai.googleapis.com/v1/projects/${projectId}/locations/${location}/processors/${processorId}:process`;
 
 const supabase = createClient(
-  process.env.SUPA_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPA_SERVICE_ROLE_KEY!
 );
 
